@@ -18,7 +18,7 @@ INFO="[${LIGHT_GREEN_FONT_PREFIX}INFO${FONT_COLOR_SUFFIX}]"
 
 echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Delete .aria2 file ..."
 
-if [ $2 -eq 0 ]; then
+if [ $2 == 0 ]; then
     rm -rvf ./on-complete.lock
     exit 0
 elif [ -e "${filePath}.aria2" ]; then
@@ -29,8 +29,9 @@ fi
 
 echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Delete .aria2 file finish"
 echo "$(($(cat numUpload)+1))" > numUpload # Plus 1
+echo -e "${filePath}"
 
-if [[ $2 -eq 1 ]]; then # single file
+if [[ $2 == 1 ]]; then # single file
 	echo "Transfering ${fileName} to Destination"
 	rclone -v --local-no-check-updated --ignore-existing --exclude "{*.txt,*.exe,*.aria2,*.torrent}" --config="rclone.conf" move "$filePath" "DRIVE:$RCLONE_DESTINATION" 2>&1	
 elif [[ $2 -gt 1 ]]; then # multiple file
