@@ -19,10 +19,13 @@ elif [ -e "${topPath}.aria2" ]; then
 fi
 echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Delete .aria2 file finish"
 echo "$(($(cat numUpload)+1))" > numUpload # Plus 1
+echo -e "${filePath}"
 
 if [[ "$2" == 1 ]]; then # single file
+	echo -e "in first 2==1 ${filePath}"
 	rclone -v --config="rclone.conf" copy "$3" "DRIVE:$RCLONE_DESTINATION" 2>&1	
 elif [[ "$2" -gt 1 ]]; then # multiple file
+	echo -e "in 2nd 2>1 ${filePath}"
 	rclone -v --config="rclone.conf" copy "$topPath" "DRIVE:$RCLONE_DESTINATION/${relativePath%%/*}"
 fi
 
